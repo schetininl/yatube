@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %} Записи сообщества {{group.title}}{% endblock %}
+{% block content %}
+
+    <h1>{{group.title}}</h1>
+    <p>
+        {{group.description}}
+    </p>
+
+    {% for post in posts %}
+        # Внутри for можно тоже вынести за табуляцию
+        <h3>
+            Автор: {{ post.author.get_full_name }}, Дата публикации: {{ post.pub_date|date:"d M Y" }}
+        </h3>
+        <p>{{ post.text|linebreaksbr }}</p>
+        <hr>
+    {% endfor %}
+
+{% endblock %}
