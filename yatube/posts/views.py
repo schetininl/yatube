@@ -10,4 +10,4 @@ def index(request):
 def group_posts(request, slug):  # не хватаает пустой строки перед функцией
     group = get_object_or_404(Group, slug=slug)
     posts = Post.objects.filter(group=group).order_by("-pub_date")[:12]
-    return render(request, "group.html", {"group": group, "posts": posts})  
+    return render(request, "group.html", {"group": group, "posts": posts}) 
