@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <title>{% block title %}The Last Social Media You'll Ever Need{% endblock %} | Yatube</title>
+        <title>{% block title %}Yatube{% endblock %} | Yatube</title>
         <!-- Загрузка статики -->
         {% load static %}
         <link rel="stylesheet" href="{% static 'bootstrap/dist/css/bootstrap.min.css' %}">
@@ -11,14 +11,12 @@
         <script src="{% static 'bootstrap/dist/js/bootstrap.min.js' %}"></script>
     </head>
     <body>
-            {% include 'nav.html' %}
-        <main>
-            <div class="container">
+        {% include 'nav.html' %}
+            <div class="container">     
                 {% block content %}
                 <!-- Содержимое страницы -->
                 {% endblock content %}
-            </div>
-        </main>
             {% include 'footer.html' %}
+        </div>
     </body>
 </html>

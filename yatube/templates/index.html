@@ -3,11 +3,13 @@
 {% block content %}
 
     {% for post in posts %}
+    <div class="bs-docs-section">
     <h3>
         Автор: {{ post.author.get_full_name }}, Дата публикации: {{ post.pub_date|date:"d M Y" }}
     </h3>
     <p>{{ post.text|linebreaksbr }}</p>
     <hr>
+    </div>
     {% endfor %}
 
 {% endblock %}
