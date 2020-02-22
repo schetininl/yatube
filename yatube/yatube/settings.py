@@ -25,7 +25,12 @@ SECRET_KEY = '!%0lq9yh%r!*2xig0-kne0-r0f#en4w2@$649^!xuwl=8eudnl'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+        "localhost",
+        "127.0.0.1",
+        "[::1]",
+        "testserver",
+]
 
 
 # Application definition
@@ -33,12 +38,16 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'users',
     'posts',
+    "django.contrib.sites",
+    "django.contrib.flatpages",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'ckeditor',
+    'ckeditor_uploader', 
 ]
 
 MIDDLEWARE = [
@@ -128,7 +137,14 @@ STATIC_ROOT = os.path.join(BASE_DIR, "static")
 LOGIN_URL = "/auth/login/"
 LOGIN_REDIRECT_URL = "index" 
 
-#  подключаем движок filebased.EmailBackend
+
 EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
-# указываем директорию, в которую будут складываться файлы писем
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
+
+SITE_ID = 1
+
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+CKEDITOR_UPLOAD_PATH = "uploads/"
