@@ -1,19 +1,20 @@
 {% extends "base.html" %}
 {% block title %} Последние обновления {% endblock %}
 {% block content %}
+    
+<main role="main" class="container">
+    <h1 style="margin: 20px 0 20px;">Последние обновления:</h1>
+    <div class="row">
 
-    {% for post in page %}
-    <div class="bs-docs-section">
-    <h3>
-        Автор: {{ post.author.get_full_name }}, Дата публикации: {{ post.pub_date|date:"d M Y" }}
-    </h3>
-    <p>{{ post.text|linebreaksbr }}</p>
-    <hr>
+        {% for post in page %}
+            {% include 'post_item.html' %}
+        {% endfor %}
+
+        {% if page.has_other_pages %}
+            {% include "paginator.html" with items=page paginator=paginator%}
+        {% endif %}
+
     </div>
-    {% endfor %}
-
-    {% if page.has_other_pages %}
-        {% include "paginator.html" with items=page paginator=paginator%}
-    {% endif %}
+</main>
 
 {% endblock %}

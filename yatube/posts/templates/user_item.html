@@ -1,0 +1,25 @@
+<div class="col-md-3 mb-3 mt-1">
+    <div class="card">
+        <div class="card-body">
+            <div class="h2 text">
+                <legend class="h2">{{profile.get_full_name}}</legend>
+            </div>
+            <div class="h3 text-muted">
+                @{{profile.username}}
+            </div>
+        </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item" style="background-color:#31383E;">
+                    <div class="h6 text-muted">
+                    Подписчиков: XXX <br />
+                    Подписан: XXX
+                    </div>
+                </li>
+                <li class="list-group-item" style="background-color:#31383E;">
+                    <div class="h6 text-muted">
+                        Записей: {{posts_count}}
+                    </div>
+                </li>
+            </ul>
+    </div>
+</div>
