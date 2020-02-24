@@ -1,0 +1,12 @@
+{% if user.is_authenticated %} 
+<div class="row" style="margin-top: 20px;">
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link {% if request.path  == '/' %}active{% endif %}" href="/">Все авторы</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if request.path  == '/follow/' %}active{% endif %}" href="/follow">Избранные авторы</a>
+        </li>
+    </ul>
+</div>
+{% endif %}

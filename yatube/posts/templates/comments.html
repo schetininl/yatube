@@ -25,14 +25,14 @@
 <div class="media-body">
     <h5 class="mt-0">
     <a
-        href="{{ item.author.username }}"
+        href="{% url 'profile' item.author.username %}"
         name="comment_{{ item.pk }}"
         >@{{ item.author.username }}</a>
     </h5>
     <p>
     {{ item.text }}
     {% if item.author.username == user.username %}
-        <br>(<a href="/{{profile.username}}/{{post.id}}/comment/{{item.pk}}/delete">Удалить</a>)
+        <br>(<a href="{% url 'comment_delete' post.author.username post.id item.pk%}">Удалить</a>)
     {% endif %}
     </p>
 </div>

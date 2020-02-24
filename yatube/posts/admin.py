@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Group, Comment
+from .models import Post, Group, Comment, Favorite
 # Register your models here.
 
 
@@ -27,3 +27,10 @@ class CommentAdmin(admin.ModelAdmin):
     empty_value_display = "-пусто-"
 
 admin.site.register(Comment, CommentAdmin)
+
+
+class FavoriteAdmin(admin.ModelAdmin):
+    list_display = ("user", "author")
+    list_filter = ("user", "author")
+
+admin.site.register(Favorite, FavoriteAdmin)

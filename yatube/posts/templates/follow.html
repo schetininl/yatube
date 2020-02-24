@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-{% block title %} Последние обновления {% endblock %}
+{% block title %} Мои подписки {% endblock %}
 {% block content %}
     
 <main role="main" class="container">
@@ -7,7 +7,7 @@
     {% include "menu.html" with index=True %}
 
     <div class="row">
-        <h1 style="margin: 20px 0 20px;">Последние обновления на сайте</h1>
+        <h1 style="margin: 20px 0 20px;">{{test}}Последние обновления у избранных авторов</h1>
 
         {% for post in page %}
             {% include 'post_item.html' %}

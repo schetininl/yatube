@@ -3,13 +3,13 @@
         <a class="navbar-brand" href="/"><span style="color:red">Ya</span>tube</a>
         <nav class="my-2 my-md-0 mr-md-3">
             {% if user.is_authenticated %}
-            Пользователь: <a class="p-2" href="/{{user.username}}/">{{ user.username }}.</a>
-            <a class="p-2" href="{% url 'new_post' %}">Новая запись</a>
-            <a class="p-2" href="{% url 'password_change' %}">Изменить пароль</a>
-            <a class="p-2" href="{% url 'logout' %}">Выйти</a>
+            <a class="p-2 btn btn-primary" href="{% url 'new_post' %}">Добавить запись</a>
+            Пользователь: <a class="p-2 btn btn-outline-info" href="/{{user.username}}/">{{ user.username }}</a>
+            <a class="p-2 btn btn-primary" href="{% url 'password_change' %}">Изменить пароль</a>
+            <a class="p-2 btn btn-primary" href="{% url 'logout' %}">Выйти</a>
             {% else %}
-            <a class="p-2" href="{% url 'login' %}">Войти</a> |
-            <a class="p-2" href="{% url 'signup' %}">Регистрация</a>
+            <a class="p-2 btn btn-primary" href="{% url 'login' %}">Войти</a> |
+            <a class="p-2 btn btn-primary" href="{% url 'signup' %}">Регистрация</a>
             {% endif %}
         </nav>
     </div>

@@ -6,19 +6,19 @@
     <div class="card-body">
         <p class="card-text">
             <strong class="d-block">
-                <a href="/{{ post.author.username }}/" class="card-link">@{{ post.author.get_full_name }}</a>
+                <a href="{% url 'profile' post.author.username %}" class="card-link">@{{ post.author.get_full_name }}</a>
                 {% if post.group %}
-                (<a href="/group/{{ post.group.slug }}/" class="text-secondary">{{ post.group }}</a>)
+                (<a href="{% url 'group' post.group.slug %}" class="text-secondary">{{ post.group }}</a>)
                 {% endif %}
             </strong>
                 {{ post.text|linebreaksbr }}
         </p>
         <div class="d-flex justify-content-between align-items-center">
             <div class="btn-group ">
-                <a class="btn btn-sm btn-primary" href="/{{post.author.username}}/{{post.id}}/" role="button">Комментарии</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'post' post.author.username post.id %}" role="button">Комментарии</a>
                 {% if post.author.username == user.username %}
-                <a class="btn btn-sm btn-primary" href="/{{post.author.username}}/{{post.id}}/edit" role="button">Редактировать</a>
-                <a class="btn btn-sm btn-primary" href="/{{post.author.username}}/{{post.id}}/delete" role="button">Удалить</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'post_edit' post.author.username post.id %}" role="button">Редактировать</a>
+                <a class="btn btn-sm btn-primary" href="{% url 'post_delete' post.author.username post.id %}" role="button">Удалить</a>
                 {% endif %}
             </div>                                            
             <small class="text-muted">{{ post.pub_date|date:"d M Y H:i" }}</small>

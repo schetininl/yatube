@@ -11,14 +11,34 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item" style="background-color:#31383E;">
                     <div class="h6 text-muted">
-                    Подписчиков: XXX <br />
-                    Подписан: XXX
+                    Подписчиков: {{followers}}<br />
+                    Подписан: {{follow}}
                     </div>
                 </li>
                 <li class="list-group-item" style="background-color:#31383E;">
                     <div class="h6 text-muted">
                         Записей: {{posts_count}}
                     </div>
+                </li>
+                <li class="list-group-item" style="background-color:#31383E;">
+                    {% if profile.username == user.username %}
+                    <a class="btn btn-primary" 
+                        href="{% url 'profile_edit' profile.username %}" role="button"> 
+                        Редактировать профиль
+                    </a> 
+                    {% else %}
+                        {% if following %}
+                        <a class="btn btn-primary" 
+                            href="{% url 'profile_unfollow' profile.username %}" role="button"> 
+                            Отписаться 
+                        </a> 
+                        {% else %}
+                        <a class="btn btn-primary" 
+                            href="{% url 'profile_follow' profile.username %}" role="button">
+                            Подписаться 
+                        </a>
+                        {% endif %}
+                    {% endif %}
                 </li>
             </ul>
     </div>
