@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Post, Group, Comment, Favorite
+from .models import Post, Group, Comment, Follow
 # Register your models here.
 
 
@@ -29,8 +29,8 @@ class CommentAdmin(admin.ModelAdmin):
 admin.site.register(Comment, CommentAdmin)
 
 
-class FavoriteAdmin(admin.ModelAdmin):
+class FollowAdmin(admin.ModelAdmin):
     list_display = ("user", "author")
     list_filter = ("user", "author")
 
-admin.site.register(Favorite, FavoriteAdmin)
+admin.site.register(Follow, FollowAdmin)
