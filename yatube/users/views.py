@@ -6,8 +6,8 @@ from .forms import CreationForm
 
 class SignUp(CreateView):
     form_class = CreationForm
-    success_url = "/auth/login/"
-    template_name = "signup.html"
+    success_url = '/auth/login/'
+    template_name = 'signup.html'
 
     def form_valid(self, form):
         email = form.cleaned_data['email']

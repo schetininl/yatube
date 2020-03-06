@@ -8,7 +8,7 @@ from django.views.decorators.cache import cache_page
 
 User = get_user_model()
 
-#@cache_page(20)
+
 def index(request):
     post_list = Post.objects.order_by("-pub_date").all()
     paginator = Paginator(post_list, 10)
@@ -55,7 +55,7 @@ def post_edit(request, username, post_id):
         if form.is_valid():
             form.save()
             return redirect("post", username=request.user.username, post_id=post_id)
-    return render(request, 'post_edit.html', {'form': form, 'title': title, 'btn_caption': btn_caption})
+    return render(request, "post_edit.html", {"form": form, "title": title, "btn_caption": btn_caption, "post": post})
 
 
 @login_required
@@ -105,8 +105,16 @@ def post_view(request, username, post_id):
     followers = Follow.objects.filter(author=profile.id).count()
     follows = Follow.objects.filter(user=profile.id).count()
     following = Follow.objects.filter(user=request.user.id, author=profile.id).all()
-    context = {'form': form, 'profile': profile, 'post': post, 'posts_count': posts_count, 'comment_list': comment_list, \
-        'followers': followers, 'follows': follows, 'following': following}
+    context = {
+        'form': form, 
+        'profile': profile, 
+        'post': post,
+        'posts_count': posts_count, 
+        'comment_list': comment_list,
+        'followers': followers, 
+        'follows': follows,
+        'following': following
+    } 
     return render(request, "post.html", context)
 
 
@@ -147,10 +155,10 @@ def follow_index(request):
 
 @login_required
 def profile_follow(request, username):
-    user = request.user.id
+    user = request.user
     author = User.objects.get(username=username)
-    follow_check = Follow.objects.filter(user=user, author=author.id).count()
-    if follow_check == 0:
+    follow_check = Follow.objects.filter(user=user.id, author=author.id).count()
+    if follow_check == 0 and author.id != user.id:
         Follow.objects.create(user=request.user, author=author)
     return redirect("profile", username=username)
 
