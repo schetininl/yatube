@@ -10,7 +10,7 @@ from .permissions import IsOwnerOrReadOnly
 class PostViewSet(viewsets.ModelViewSet):
     serializer_class = PostSerializer
     queryset = Post.objects.all()
-    permission_classes = [permissions.IsAuthenticated,
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
@@ -19,7 +19,7 @@ class PostViewSet(viewsets.ModelViewSet):
 
 class CommentViewSet(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticated,
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly]
     
     def perform_create(self, serializer):

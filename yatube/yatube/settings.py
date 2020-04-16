@@ -55,12 +55,20 @@ INSTALLED_APPS = [
 
 REST_FRAMEWORK = {        
         'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated', 
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly', 
         ],
     
         'DEFAULT_AUTHENTICATION_CLASSES': [
             'rest_framework.authentication.TokenAuthentication',
-        ]
+        ],
+        'DEFAULT_THROTTLE_CLASSES': [
+            'rest_framework.throttling.UserRateThrottle',
+            'rest_framework.throttling.AnonRateThrottle',
+        ],
+        'DEFAULT_THROTTLE_RATES': {
+            'user': '10000/day', #  лимит для UserRateThrottle
+            'anon': '1000/day',  #  лимит для AnonRateThrottle
+        },
     }
 
 MIDDLEWARE = [
