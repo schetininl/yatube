@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "sorl.thumbnail",
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'corsheaders',
     "debug_toolbar",
 ]
@@ -69,6 +70,7 @@ REST_FRAMEWORK = {
             'user': '10000/day', #  лимит для UserRateThrottle
             'anon': '1000/day',  #  лимит для AnonRateThrottle
         },
+        'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     }
 
 MIDDLEWARE = [
