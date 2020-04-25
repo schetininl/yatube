@@ -1,0 +1,508 @@
+openapi: 3.0.2
+info:
+  title: 'Yatube API'
+  version: ''
+  description: API начинается с /api/v1/
+
+servers:
+  - url: /api/v1/
+
+tags:
+  - name: POSTS
+    description: Посты
+  - name: COMMENTS
+    description: Комментарии
+  - name: AUTH
+  - name: FOLLOW
+    description: Подписки
+  - name: GROUP
+    description: Группы
+
+paths:
+  /posts/:
+    get:
+      tags:
+        - POSTS
+      description: Получить список всех публикаций
+      parameters:
+      - name: group
+        in: query
+        description: ID группы
+        schema:
+          type: number
+      responses:
+        200:
+          description: Список публикаций
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Post'
+    post:
+      tags:
+        - POSTS
+      description: Создать новую публикацию
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        200:
+          description: 'Новая публикация'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+  /posts/{id}/:
+    get:
+      tags:
+        - POSTS
+      description: Получить публикацию по id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      responses:
+        200:
+          description: Публикация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        400:
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    put:
+      tags:
+        - POSTS
+      description: 'Обновить публикацию по id'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        200:
+          description: Публикация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        400:
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    patch:
+      tags:
+        - POSTS
+      description: Частично обновить публикацию по id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Post'
+      responses:
+        200:
+          description: Публикация
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Post'
+        400:
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+    delete:
+      tags:
+        - POSTS
+      description: Удалить публикацию по id
+      parameters:
+      - name: id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      responses:
+        204:
+          description: ''
+  /posts/{post_id}/comments/:
+    get:
+      tags:
+        - COMMENTS
+      description: 'Получить список всех комментариев публикации'
+      parameters:
+      - name: post_id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+          description: ''
+
+    post:
+      tags:
+        - COMMENTS
+      description: 'Создать новый комментарий для публикации'
+      parameters:
+      - name: post_id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      responses:
+        200:
+          content:
+            application/json:
+              schema: {}
+          description: ''
+  /posts/{post_id}/comments/{comment_id}/:
+    get:
+      tags:
+        - COMMENTS
+      description: 'Получить комментарий для публикации по id'
+      parameters:
+      - name: post_id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        required: true
+        description: ID комментария
+        schema:
+          type: number
+      responses:
+        200:
+          content:
+            application/json:
+              schema: {}
+          description: ''
+    put:
+      tags:
+        - COMMENTS
+      description: 'Обновить комментарий для публикации по id'
+      parameters:
+      - name: post_id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        required: true
+        description: ID комментария
+        schema:
+          type: number
+      responses:
+        200:
+          content:
+            application/json:
+              schema: {}
+          description: ''
+    patch:
+      tags:
+        - COMMENTS
+      description: 'Частично обновить комментарий для публикации по id'
+      parameters:
+      - name: post_id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        required: true
+        description: ID комментария
+        schema:
+          type: number
+      responses:
+        200:
+          content:
+            application/json:
+              schema: {}
+          description: ''
+    delete:
+      tags:
+        - COMMENTS
+      description: 'Удалить комментарий для публикации по id'
+      parameters:
+      - name: post_id
+        in: path
+        required: true
+        description: ID публикации
+        schema:
+          type: number
+      - name: comment_id
+        in: path
+        required: true
+        description: ID комментария
+        schema:
+          type: number
+      responses:
+        204:
+          description: ''
+  /token/:
+    post:
+      tags:
+        - AUTH
+      description: Получить JWT-токен
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - username
+                - password
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+                  writeOnly: true
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JWTToken'
+          description: ''
+        400:
+          description: Ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /token/refresh/:
+    post:
+      tags:
+        - AUTH
+      description: Обновить JWT-токен
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - refresh
+              properties:
+                refresh:
+                  type: string
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                properties:
+                  refresh:
+                    type: string
+                required:
+                - refresh
+          description: ''
+
+  /follow/:
+    get:
+      tags:
+        - FOLLOW
+      description: Получить список всех подписчиков
+      parameters:
+      - name: search
+        in: query
+        description: username тот кто подписан или на кого подписаны
+        schema:
+          type: string
+      responses:
+        200:
+          description: Список подписчиков
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Follow'
+    post:
+      tags:
+        - FOLLOW
+      description: Создать подписку
+      parameters:
+      - name: user
+        in: query
+        description: Пользователь для фильтрации по подписчикам
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - following
+              properties:
+                following:
+                  type: string
+      responses:
+        200:
+          description: Подписаться
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Follow'
+
+  /group/:
+    get:
+      tags:
+        - GROUP
+      description: Получить список всех групп
+      parameters: []
+      responses:
+        200:
+          description: Список групп
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Group'
+    post:
+      tags:
+        - GROUP
+      description: Создать новую группу
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Group'
+      responses:
+        200:
+          description: 'Новая группа'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Group'
+
+
+components:
+  schemas:
+    Post:
+      title: Пост
+      type: object
+      description: Детальная информация поста
+      required:
+          - text
+      properties:
+        id:
+          type: integer
+          title: ID  поста
+          readOnly: true
+        text:
+          type: string
+          title: Текст поста
+        author:
+          type: string
+          title: username пользователя
+          readOnly: true
+        pub_date:
+          type: string
+          format: date-time
+          title: Дата публикации
+          readOnly: true
+    ValidationError:
+      title: Ошибка валидации
+      type: object
+      properties:
+        field_name:
+          type: array
+          items:
+            type: string
+    JWTToken:
+      title: JWT Токен
+      type: object
+      properties:
+        access:
+          type: string
+          title: access токен
+        refresh:
+          type: string
+          title: refresh токен
+    Comment:
+      title: Комментарий
+      type: object
+      description: Детальная информация комментария
+      required:
+          - text
+      properties:
+        id:
+          type: integer
+          title: ID  комментария
+          readOnly: true
+        text:
+          type: string
+          title: Текст комментария
+        author:
+          type: string
+          title: username пользователя
+          readOnly: true
+        pub_date:
+          type: string
+          format: date-time
+          title: Дата публикации комментария
+          readOnly: true
+    Follow:
+      title: Подписчики
+      type: object
+      properties:
+        user:
+          type: string
+          title: username кто подписался
+        following:
+          type: string
+          title: username на кого подписаться
+    Group:
+      title: Группы
+      type: object
+      properties:
+        title:
+          type: string
+          title: На кого подписаться
