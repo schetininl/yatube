@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+
+  web:
+    build:
+      context: .
+    image: schetininl/yatube
+    command: python yatube/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    working_dir: /app
+    ports:
+      - 8000:8000
+    environment:
+      - PYTHONUNBUFFERED=1

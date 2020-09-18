@@ -4,7 +4,6 @@ from .forms import PostForm, CommentForm, UserEditForm
 from django.core.paginator import Paginator
 from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.cache import cache_page
 
 User = get_user_model()
 
@@ -31,12 +30,11 @@ def new_post(request):
     title = "Добавить запись"
     btn_caption = "Добавить"
     form = PostForm(request.POST or None, files=request.FILES or None)
-    if request.method == "POST":
-        if form.is_valid():
-            new_post = form.save(commit=False)
-            new_post.author = request.user
-            new_post.save()
-            return redirect("index")      
+    if request.method == "POST" and form.is_valid():
+        post = form.save(commit=False)
+        post.author = request.user
+        post.save()
+        return redirect("index")
     form = PostForm()
     return render(request, "post_edit.html", {"form": form, "title": title, "btn_caption": btn_caption})
 
@@ -51,10 +49,9 @@ def post_edit(request, username, post_id):
     title = "Редактировать запись"
     btn_caption = "Сохранить"
     form = PostForm(request.POST or None, files=request.FILES or None, instance=post)
-    if request.method == "POST":
-        if form.is_valid():
-            form.save()
-            return redirect("post", username=request.user.username, post_id=post_id)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        return redirect("post", username=request.user.username, post_id=post_id)
     return render(request, "post_edit.html", {"form": form, "title": title, "btn_caption": btn_caption, "post": post})
 
 
@@ -174,8 +171,8 @@ def profile_unfollow(request, username):
 
 
 def page_not_found(request, exception):
-        return render(request, "misc/404.html", {"path": request.path}, status=404)
+    return render(request, "misc/404.html", {"path": request.path}, status=404)
 
 
 def server_error(request):
-        return render(request, "misc/500.html", status=500)
+    return render(request, "misc/500.html", status=500)
